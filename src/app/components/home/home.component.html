@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 col-xs-12 col-md-12 col-lg-12">
+      <div class="row p-5">
+        <form
+          class="d-flex"
+          [formGroup]="searchForm"
+          (ngSubmit)="buscarPeliculas($event)"
+        >
+          <input
+            class="form-control me-sm-2 mr-2"
+            type="search"
+            placeholder="Buscar peliculas"
+            formControlName="movieTitle"
+          />
+          <button class="btn btn-secondary my-2 my-sm-0" type="submit">
+            Buscar
+          </button>
+        </form>
+      </div>
+    </div>
+    <div class="col-md-12 col-sm-12 col-lg-12">
+      <div class="row" *ngIf="movies">
+        <div class="col-lg-3 col-md-3 col-xs-3" *ngFor="let movie of movies">
+          <div class="card">
+            <img class="card-img-top" src="{{ movie.image }}" />
+            <div class="card-body">
+              <h5 class="card-title">{{ movie.title }}</h5>
+              <p class="card-text">{{ movie.description }}</p>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted">Lanzamiento: {{ movie.release }}</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
