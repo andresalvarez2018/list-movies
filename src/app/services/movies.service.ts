@@ -11,6 +11,7 @@ export class MoviesServices {
     'X-RapidAPI-Key': '7f83f0201fmsh7ee961522e2f506p134133jsn51f0887c813b',
     'X-RapidAPI-Host': 'movies-app1.p.rapidapi.com',
   };
+  private  numeroAleatorio: number = 0
 
   constructor(private http: HttpClient) {}
 
@@ -29,9 +30,13 @@ export class MoviesServices {
       .pipe(map((resp: any) => resp.results));
   }
 
-  listYear(): Observable<any> {
+  PeliculasRecomendations(): Observable<any> {
+    this.numeroAleatorio = Math.floor(Math.random() * 50) + 1;
     return this.http
-      .get(this.urlBase + '/years', { headers: this.headers })
+      .get(this.urlBase + '/movies', {
+        headers: this.headers,
+        params: { page: this.numeroAleatorio },
+      })
       .pipe(map((resp: any) => resp.results));
   }
 }

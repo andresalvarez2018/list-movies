@@ -1,35 +1,50 @@
 <div class="container">
-  <div class="row">
-    <div class="col-md-12 col-xs-12 col-md-12 col-lg-12">
-      <div class="row p-5">
-        <form
-          class="d-flex"
-          [formGroup]="searchForm"
-          (ngSubmit)="buscarPeliculas($event)"
-        >
-          <input
-            class="form-control me-sm-2 mr-2"
-            type="search"
-            placeholder="Buscar peliculas"
-            formControlName="movieTitle"
-          />
-          <button class="btn btn-secondary my-2 my-sm-0" type="submit">
-            Buscar
-          </button>
-        </form>
+  <div class="row align-items-start">
+    <div class="col-md-12 col-xs-12 col-md-12 col-lg-3 d-flex justify-content-center flex-column align-items-center">
+      <h3 class="mt-5 p-2"> Recomendaciones</h3>
+      <div class="card mb-3 mt-5" *ngFor="let recommendation of recommendations.slice(0, 19)">
+        <img class="img-fluid" src="{{ recommendation.image }}" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">{{ recommendation.title }}</h5>
+          <p class="card-text"><small class="text-muted">Lanzamiento: {{ recommendation.createdAt | date:'yyyy-MM-dd' }}</small></p>
+        </div>
       </div>
     </div>
-    <div class="col-md-12 col-sm-12 col-lg-12">
-      <div class="row" *ngIf="movies">
-        <div class="col-lg-3 col-md-3 col-xs-3" *ngFor="let movie of movies">
-          <div class="card">
-            <img class="card-img-top" src="{{ movie.image }}" />
-            <div class="card-body">
-              <h5 class="card-title">{{ movie.title }}</h5>
-              <p class="card-text">{{ movie.description }}</p>
-            </div>
-            <div class="card-footer">
-              <small class="text-muted">Lanzamiento: {{ movie.release }}</small>
+    <div class="col-md-12 col-xs-12 col-md-12 col-lg-9">
+      <div>
+        <div class="row p-5">
+          <form
+            class="d-flex"
+            [formGroup]="searchForm"
+            (ngSubmit)="buscarPeliculas($event)"
+          >
+            <input
+              class="form-control me-sm-2 mr-2"
+              type="search"
+              placeholder="Buscar peliculas"
+              formControlName="movieTitle"
+            />
+            <button class="btn btn-secondary my-2 my-sm-0" type="submit">
+              Buscar
+            </button>
+          </form>
+        </div>
+      </div>
+      <div >
+        <div class="row" *ngIf="movies">
+          <div class="col-lg-4 col-md-4 col-xs-3 mt-3" *ngFor="let movie of movies">
+            <div class="card">
+              <img class="card-img-top" src="{{ movie.image }}" />
+              <div class="card-body">
+                <h5 class="card-title">{{ movie.title }}</h5>
+                <p class="card-text">{{ recortarTexto(movie.description,20) }}</p>
+                <div *ngFor="let genres of movie.genres">
+                  <span class="badge rounded-pill bg-primary">{{ genres.name }}</span>
+                </div>
+              </div>
+              <div class="card-footer">
+                <small class="text-muted">Lanzamiento: {{ movie.createdAt | date:'yyyy-MM-dd' }}</small>
+              </div>
             </div>
           </div>
         </div>
